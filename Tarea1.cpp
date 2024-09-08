@@ -21,6 +21,14 @@ public:
         puntero_operaciones = operaciones;
         puntero_salida = new int[largo_operaciones]();
     }
+    
+    void cargar_operaciones(const std::string& linea){
+    int len = std::min(static_cast<int>(linea.size()), largo_operaciones);
+            for (int i = 0; i < len; i++){
+            operaciones[i] = linea[i];
+        }
+        puntero_operaciones = operaciones;
+    }
 
     void ejecutar_operador() {
         char operador = *puntero_operaciones;
@@ -77,18 +85,23 @@ public:
     }
 
     void mover(char dir) {
+        int pos = 0;
         if (dir == '>') {
-            ++puntero_salida;
-            if( *puntero_salida == ' '){
-                *puntero_salida = 0;
+            if (pos < largo_operaciones - 1){
+                ++puntero_salida;
+                if( *puntero_salida == ' '){
+                    *puntero_salida = 0;
+                }
             }
             
 
         }
         else if (dir == '<') {
-            --puntero_salida;
-            if (*puntero_salida == ' '){
-                *puntero_salida = 0;
+            if (pos > 0){
+                --puntero_salida;
+                if (*puntero_salida == ' '){
+                    *puntero_salida = 0;
+                }
             }
         }
     }
@@ -137,6 +150,21 @@ public:
     void cargar_programa(int n){ 
         if(n < cant_programas && n >= 0){
             cargado = n;
+            std::ifstream archivo("Programas.txt");
+            if (!archivo.is_open()) {
+                std::cerr << "Error al abrir el archivo" << std::endl;
+                return;
+            }
+            std::string linea;
+            int linea_actual = 0;
+            while (std::getline(archivo,linea)){
+                if (linea_actual == n){
+                    programas[cargado]->cargar_operaciones(linea);
+                    break;
+                }
+                linea_actual++;
+            }
+            archivo.close();
         }
     }
 
