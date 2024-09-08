@@ -192,7 +192,20 @@ public:
         delete[] salida;
     }
 };
-
+/* ****
+* int main
+******
+* Esta funcion main hace funcionar el interprete de programas. Lee el archivo "Programas.txt"
+* para extraer el tamaño maximo de salida y la cantidad de programas, luego, permite cargar, ejecutar, mostrar 
+* y terminar el programa segun los comandos introducidos.
+******
+* Input: 
+* Ninguno
+******
+* Returns:
+* int, devuelve 0 si se introduce el comando "s" para terminar la ejecucion,
+* devuelve 1 si se falla al abrir el archivo.
+*/
 int main(){ 
     std::ifstream archivo;
     archivo.open("Programas.txt");
